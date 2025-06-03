@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Students collection - students can read/write their own data, instructors can read/write students with their instructor code
+    match /students/{studentId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == resource.data.uid || isInstructor(resource.data.instructorCode));
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+    }
+    
+    // Instructors collection - instructors can read/write their own data
+    match /instructors/{instructorId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.uid;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+      // Allow reading for instructor code validation during student registration
+      allow read: if request.auth != null;
+    }
+    
+    // Announcements collection - instructors can create/update their announcements, students can read announcements from their instructor
+    match /announcements/{announcementId} {
+      allow read: if request.auth != null && 
+        (isInstructorOfAnnouncement() || isStudentOfInstructor(resource.data.instructorCode));
+      allow create, update: if request.auth != null && isInstructorOfAnnouncement();
+      allow delete: if request.auth != null && isInstructorOfAnnouncement();
+    }
+    
+    // Helper functions
+    function isInstructor(instructorCode) {
+      return exists(/databases/$(database)/documents/instructors/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/instructors/$(request.auth.uid)).data.instructorCode == instructorCode;
+    }
+    
+    function isInstructorOfAnnouncement() {
+      return exists(/databases/$(database)/documents/instructors/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/instructors/$(request.auth.uid)).data.instructorCode == request.resource.data.instructorCode;
+    }
+    
+    function isStudentOfInstructor(instructorCode) {
+      return exists(/databases/$(database)/documents/students/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/students/$(request.auth.uid)).data.instructorCode == instructorCode;
+    }
+  }
+}
