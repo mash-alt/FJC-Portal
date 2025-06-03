@@ -1,6 +1,6 @@
 # FJC - Portal 🎓
 
-A comprehensive student management system built with React, TypeScript, and Firebase. Portal Sabido provides separate interfaces for students and instructors, enabling efficient tracking of student information, payment status, announcements, and academic progress.
+A comprehensive student management system built with React, TypeScript, and Firebase. FJC-Portal provides separate interfaces for students and instructors, enabling efficient tracking of student information, payment status, announcements, and academic progress.
 
 ## ✨ Features
 
@@ -222,7 +222,7 @@ All Firebase configuration values should be stored in environment variables pref
 
 ## 📱 Mobile Responsiveness
 
-Portal Sabido is designed with a mobile-first approach:
+FJC-Portal is designed with a mobile-first approach:
 - Responsive navigation with hamburger menu
 - Optimized layouts for tablets and smartphones
 - Touch-friendly interface elements
@@ -255,7 +255,7 @@ If you encounter any issues or have questions:
 
 ---
 
-**Portal Sabido** - Empowering education through efficient student management. 🎓✨
+**FJC-Portal** - Empowering education through efficient student management. 🎓✨
   },
 })
 ```
