@@ -1,4 +1,4 @@
-# Portal Sabido 🎓
+# FJC - Portal 🎓
 
 A comprehensive student management system built with React, TypeScript, and Firebase. Portal Sabido provides separate interfaces for students and instructors, enabling efficient tracking of student information, payment status, announcements, and academic progress.
 
